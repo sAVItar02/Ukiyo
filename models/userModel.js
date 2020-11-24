@@ -1,27 +1,35 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const userSchema = new mongoose.Schema({
-    uid: {
-        type: String,
-        required: true,
-        trim: true,
+  name: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  uid: {
+    type: String,
+    required: true,
+    trim: true,
+  },
+  watchList: [
+    {
+      type: String,
+      trim: true,
     },
-    watchList: [{
-        anime: {
-            type: String,
-            trim: true,
-        }
-    }],
-    watchLater:[{
-        anime: {
-            type: String,
-            trim: true,
-        }
-    }],
-    recommended:[{
-        anime: {
-            type: String,
-            trim: true,
-        }
-    }]
+  ],
+  watchLater: [
+    {
+      type: String,
+      trim: true,
+    },
+  ],
+  recommended: [
+    {
+      type: String,
+      trim: true,
+    },
+  ],
 });
+
+const user = mongoose.model("user", userSchema);
+module.exports = user;
