@@ -1,14 +1,11 @@
-const request = require('request');
-const Data = require('../models/userModel');
-const query = require('./../graphql');
-const fetch = require('node-fetch');
-const discord = require('discord.js');
+const query = require("../graphql");
+const fetch = require("node-fetch");
+const discord = require("discord.js");
 
 module.exports.run = async (bot, message, args) => {
   const url = `https://graphql.anilist.co`;
-  console.log(url);
   if (args.length > 1) {
-    args = args.join('-');
+    args = args.join("-");
   } else {
     args = args[0];
   }
@@ -20,10 +17,10 @@ module.exports.run = async (bot, message, args) => {
   };
 
   let options = {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
+      "Content-Type": "application/json",
+      Accept: "application/json",
     },
     body: JSON.stringify({
       query: query,
@@ -34,8 +31,6 @@ module.exports.run = async (bot, message, args) => {
   fetch(url, options)
     .then((response) => response.json())
     .then((result) => {
-      console.log(result.data);
-
       const animeData = result.data.Page;
       let anime = {
         title: animeData.media[0].title.romaji,
@@ -47,19 +42,19 @@ module.exports.run = async (bot, message, args) => {
         duration: animeData.media[0].duration,
       };
       const animeEmbed = new discord.MessageEmbed()
-        .setColor('#FF7F49')
+        .setColor("#FF7F49")
         .setTitle(anime.title)
         .setDescription(anime.desc)
         .setThumbnail(anime.image)
         .addFields(
-          { name: 'Status', value: `\`${anime.status}\``, inline: true },
+          { name: "Status", value: `\`${anime.status}\``, inline: true },
           {
-            name: 'Episode Count',
+            name: "Episode Count",
             value: `\`${anime.epCount}\``,
             inline: true,
           },
           {
-            name: 'Duration',
+            name: "Duration",
             value: `\`${anime.duration}m\``,
             inline: true,
           }
@@ -70,6 +65,6 @@ module.exports.run = async (bot, message, args) => {
 };
 
 module.exports.help = {
-  name: 'show',
-  aliases: ['s', 'd', 'disp', 'display', 'view', 'describe'],
+  name: "describe",
+  aliases: ["desc", "d"],
 };

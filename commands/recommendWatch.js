@@ -1,4 +1,3 @@
-const request = require("request");
 const Data = require("../models/userModel");
 const discord = require("discord.js");
 const fetch = require("node-fetch");
@@ -24,8 +23,6 @@ module.exports.run = async (bot, message, args) => {
   } else {
     args = args[0];
   }
-
-  console.log(args);
 
   let variables = {
     search: args,

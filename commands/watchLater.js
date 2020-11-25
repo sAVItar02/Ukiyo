@@ -1,4 +1,3 @@
-const request = require("request");
 const Data = require("../models/userModel");
 const fetch = require("node-fetch");
 const discord = require("discord.js");

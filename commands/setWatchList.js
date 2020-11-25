@@ -1,4 +1,3 @@
-const request = require("request");
 const Data = require("../models/userModel");
 const discord = require("discord.js");
 const fetch = require("node-fetch");
@@ -11,7 +10,6 @@ module.exports.run = async (bot, message, args) => {
   } else {
     args = args[0];
   }
-  console.log(args);
 
   const url = `https://graphql.anilist.co`;
 
