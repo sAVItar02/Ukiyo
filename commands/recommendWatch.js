@@ -25,7 +25,7 @@ module.exports.run = async(bot, message, args) =>{
             Data.findOne({uid: taggedID}, async(err, data)=>{
                 if(!data){
                     const newData = new Data({
-                        uid: tagged,
+                        uid: taggedID,
                         watchList: [],
                         watchLater: [],
                         recommended: [anime], 
