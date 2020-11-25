@@ -36,8 +36,6 @@ module.exports.run = async (bot, message, args) => {
   fetch(url, options)
     .then((response) => response.json())
     .then((result) => {
-      console.log(result.data);
-
       const animeData = result.data.Page;
       let anime = {
         title: animeData.media[0].title.romaji,
@@ -62,8 +60,6 @@ module.exports.run = async (bot, message, args) => {
         } else {
           data.watchList.push(anime.title);
           await data.save().catch((e) => console.log(e));
-          console.log(data);
-          // message.channel.send("Anime added!");
         }
         const animeEmbed = new discord.MessageEmbed()
           .setColor("#BFFF00")
