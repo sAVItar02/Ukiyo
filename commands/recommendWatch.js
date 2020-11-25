@@ -5,6 +5,7 @@ module.exports.run = async(bot, message, args) =>{
 
     if(!(args[0]).startsWith('<@')){
         message.channel.send('If I were you, I\'d recommend that to a user by tagging them 🍜');
+        return;
     }
 
     let user = message.author;
