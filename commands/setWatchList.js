@@ -3,8 +3,11 @@ const Data = require("../models/userModel");
 
 module.exports.run = async (bot, message, args) => {
   let user = message.author;
-  const url = `https://kitsu.io/api/edge/anime?filter[text]=${args[0]}`;
-  //   const url = `https://jsonplaceholder.typicode.com/todos/1`;
+  if(args.length>1){
+    args=args.join('-');
+  }
+  console.log(args);
+  const url = `https://kitsu.io/api/edge/anime?filter[text]=${args}`;
   console.log(url);
 
   request({ url: url }, async (err, response) => {
@@ -12,7 +15,6 @@ module.exports.run = async (bot, message, args) => {
       console.log(err);
     } else {
       const anime = JSON.parse(response.body).data[0].attributes.titles.en_us;
-      console.log(anime);
       Data.findOne({ uid: user.id }, async (err, data) => {
         if (!data) {
           const newData = new Data({
@@ -38,5 +40,5 @@ module.exports.run = async (bot, message, args) => {
 
 module.exports.help = {
   name: 'watching',
-  aliases: ['w','watch','wtch'],
+  aliases: ['w','seeing','watch'],
 };

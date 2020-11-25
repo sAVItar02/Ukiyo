@@ -14,9 +14,9 @@ module.exports.run = async (bot, message, args) => {
         let anime = {
             title: animeData.data[0].attributes.titles.en_us,
             image: animeData.data[0].attributes.posterImage.tiny,
-            desc: animeData.data[0].attributes.description,
+            desc: ((animeData.data[0].attributes.description).split('\n'))[0],
         }
-        message.channel.send(`\`\`\`${anime.desc}\`\`\``);
+        message.channel.send(`\`\`\`${anime.image}\n${anime.title}${anime.desc}\`\`\``);
        
       }
     });
