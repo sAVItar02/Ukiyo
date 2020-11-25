@@ -12,7 +12,7 @@ module.exports.run = async (bot, message, args) => {
     args = args[0];
   }
   console.log(args);
-  // const url = `https://kitsu.io/api/edge/anime?filter[text]=${args}`;
+
   const url = `https://graphql.anilist.co`;
 
   let variables = {
