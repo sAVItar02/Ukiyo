@@ -2,10 +2,9 @@ const request = require("request");
 const Data = require("../models/userModel");
 
 module.exports.run = async (bot, message, args) => {
-    let user = message.author;
+  
     const url = `https://kitsu.io/api/edge/anime?filter[text]=${args[0]}`;
     console.log(url);
-    const anime = {title: '',desc: '', img:''}
   
     request({ url: url }, async (err, response) => {
       if (err) {
@@ -17,13 +16,13 @@ module.exports.run = async (bot, message, args) => {
             image: animeData.data[0].attributes.posterImage.tiny,
             desc: animeData.data[0].attributes.description,
         }
-        message.channel.send(anime.image);
+        message.channel.send(`\`\`\`${anime.desc}\`\`\``);
        
       }
     });
   };
   module.exports.help = {
     name: 'show',
-    aliases: ['s','d','disp','display','view'],
+    aliases: ['s','d','disp','display','view','describe'],
   };
   
