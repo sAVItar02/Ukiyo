@@ -1,9 +1,25 @@
+const discord = require('discord.js');
+
 module.exports.run = async (bot, message, args) => {
-    message.channel.send('Konnichiwa UwU\nThis is how you can get started.\n Add an anime to your watchlist by using watching <anime name>.\n Recommend an anime to a user by using recommend <user> <anime name>.\n Add an anime to your watchList by using <add><animeName>.\n You could talk to me if youre lonely too ;)')
-  };
-  
-  module.exports.help = {
-    name: 'help',
-    aliases: ['h','hlp'],
-  };
-  
+
+  const Embed = new discord.MessageEmbed()
+    .setAuthor('Konnichiwa uwu')
+    .setColor('#FFB6C1')
+    .setTitle('Help')
+    .setDescription('Some commands for your help 💥')
+    .setThumbnail('https://www.awesomeinventions.com/wp-content/uploads/2015/06/japanese-words-ukiyo.jpg')
+    .addFields(
+      { name: 'Recommend Anime', value: `\`recommend\``, inline: true },
+      { name: 'Watch Later', value: `\`watch\``, inline: true },
+      { name: 'Watching', value: `\`add\``, inline: true },
+      { name: 'Get anime details', value: `\`get\``, inline: true }
+      { name: 'Trivia', value: `\`trivia\``, inline: true }
+
+    );
+  message.channel.send(Embed);
+};
+
+module.exports.help = {
+  name: 'help',
+  aliases: ['h', 'hlp'],
+};
