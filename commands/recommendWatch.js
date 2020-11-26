@@ -53,6 +53,7 @@ module.exports.run = async (bot, message, args) => {
         desc: animeData.media[0].description.split(".")[0],
         status: animeData.media[0].status,
         epCount: animeData.media[0].episodes,
+        genre: animeData.media[0].genres
       };
 
       Data.findOne({ uid: taggedID }, async (err, data) => {
@@ -61,11 +62,11 @@ module.exports.run = async (bot, message, args) => {
             uid: taggedID,
             watchList: [],
             watchLater: [],
-            recommended: [anime.title],
+            recommended: [{anime: anime.title, genres:anime.genre}],
           });
           await newData.save().catch((err) => console.log(err));
         } else {
-          data.recommended.push(anime.title);
+          data.recommended.push([{anime: anime.title, genres:anime.genre}]);;
           await data.save().catch((err) => console.log(err));
         }
 
