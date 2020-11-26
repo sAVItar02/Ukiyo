@@ -1,9 +1,10 @@
 const Data = require('../models/userModel');
+const discord = require('discord.js');
 
 module.exports.run = async (bot, message, args) => {
   let user = message.author;
   if (message.mentions.users.first()) {
-    message.channel.send("Baka! Don't fiddle with other user\'s anime list! 👿");
+    message.channel.send("Baka! Don't fiddle with other users anime list! 👿");
     return;
   }
 
@@ -14,7 +15,7 @@ module.exports.run = async (bot, message, args) => {
 
   Data.findOneAndUpdate(
     { uid: user.id },
-    { $pull: { watchList: { anime: args } } },
+    { $pull: { watchLater: { anime: args } } },
     async (err, data) => {
       if (err) {
         console.log(err);
@@ -26,6 +27,6 @@ module.exports.run = async (bot, message, args) => {
 };
 
 module.exports.help = {
-  name: 'removeWatching',
-  aliases: ['rw', 'remw', 'rmw'],
+  name: 'removeWatchLater',
+  aliases: ['rwl', 'remwl', 'rmwl'],
 };
