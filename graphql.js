@@ -18,6 +18,7 @@ let query = `query ($search: String, $page: Int, $perPage: Int) {
         duration
         episodes
         status
+        genres
         coverImage {
           extraLarge
           large

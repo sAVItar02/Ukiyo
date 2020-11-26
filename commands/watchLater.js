@@ -50,13 +50,13 @@ module.exports.run = async (bot, message, args) => {
             uid: user.id,
             name: bot.users.cache.get(user.id).username,
             watchList: [],
-            watchLater: [anime.title],
+            watchLater: [{anime: anime.title, genres:anime.genre}],
             recommended: [],
           });
 
           await newData.save().catch((e) => console.log(e));
         } else {
-          data.watchLater.push(anime.title);
+          data.watchLater.push([{anime: anime.title, genres:anime.genre}]);
           await data.save().catch((e) => console.log(e));
         }
 

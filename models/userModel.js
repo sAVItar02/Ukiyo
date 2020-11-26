@@ -12,20 +12,44 @@ const userSchema = new mongoose.Schema({
   },
   watchList: [
     {
+      anime:{
       type: String,
       trim: true,
+      },
+      genres:[
+        {
+        type: String,
+        trim: true,
+        }
+      ]
     },
   ],
   watchLater: [
     {
+      anime:{
       type: String,
       trim: true,
+      },
+      genres:[
+        {
+        type: String,
+        trim: true,
+        }
+      ]
     },
   ],
   recommended: [
     {
+      anime:{
       type: String,
       trim: true,
+      },
+      genres:[
+        {
+        type: String,
+        trim: true,
+        }
+      ]
     },
   ],
 });

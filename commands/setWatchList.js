@@ -42,6 +42,7 @@ module.exports.run = async (bot, message, args) => {
         desc: animeData.media[0].description.split(".")[0],
         status: animeData.media[0].status,
         epCount: animeData.media[0].episodes,
+        genre: animeData.media[0].genres
       };
 
       Data.findOne({ uid: user.id }, async (err, data) => {
@@ -49,14 +50,14 @@ module.exports.run = async (bot, message, args) => {
           const newData = new Data({
             uid: user.id,
             name: bot.users.cache.get(user.id).username,
-            watchList: [anime.title],
+            watchList: [{anime: anime.title, genres:anime.genre}],
             watchLater: [],
             recommended: [],
           });
 
           await newData.save().catch((e) => console.log(e));
         } else {
-          data.watchList.push(anime.title);
+          data.watchList.push([{anime: anime.title, genres:anime.genre}]);
           await data.save().catch((e) => console.log(e));
         }
         const animeEmbed = new discord.MessageEmbed()
@@ -74,7 +75,7 @@ module.exports.run = async (bot, message, args) => {
             }
           );
 
-        message.channel.send(animeEmbed);
+        mssage.channel.send(animeEmbed);
       });
     });
 };
