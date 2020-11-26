@@ -66,7 +66,7 @@ module.exports.run = async (bot, message, args) => {
           });
           await newData.save().catch((err) => console.log(err));
         } else {
-          data.recommended.push([{anime: anime.title, genres:anime.genre}]);;
+          data.recommended.push({anime: anime.title, genres:anime.genre});;
           await data.save().catch((err) => console.log(err));
         }
 

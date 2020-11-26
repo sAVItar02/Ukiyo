@@ -1,14 +1,14 @@
-const Data = require("../models/userModel");
-const fetch = require("node-fetch");
-const discord = require("discord.js");
-const query = require("../graphql");
+const Data = require('../models/userModel');
+const fetch = require('node-fetch');
+const discord = require('discord.js');
+const query = require('../graphql');
 
 module.exports.run = async (bot, message, args) => {
   let user = message.author;
   const url = `https://graphql.anilist.co`;
 
   if (args.length > 1) {
-    args = args.join("-");
+    args = args.join('-');
   } else {
     args = args[0];
   }
@@ -20,10 +20,10 @@ module.exports.run = async (bot, message, args) => {
   };
 
   let options = {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
     },
     body: JSON.stringify({
       query: query,
@@ -39,9 +39,10 @@ module.exports.run = async (bot, message, args) => {
         title: animeData.media[0].title.romaji,
         english: animeData.media[0].title.english,
         image: animeData.media[0].coverImage.medium,
-        desc: animeData.media[0].description.split(".")[0],
+        desc: animeData.media[0].description.split('.')[0],
         status: animeData.media[0].status,
         epCount: animeData.media[0].episodes,
+        genre: animeData.media[0].genres
       };
 
       Data.findOne({ uid: user.id }, async (err, data) => {
@@ -50,26 +51,26 @@ module.exports.run = async (bot, message, args) => {
             uid: user.id,
             name: bot.users.cache.get(user.id).username,
             watchList: [],
-            watchLater: [{anime: anime.title, genres:anime.genre}],
+            watchLater: [{ anime: anime.title, genres: anime.genre }],
             recommended: [],
           });
-
+         
           await newData.save().catch((e) => console.log(e));
         } else {
-          data.watchLater.push([{anime: anime.title, genres:anime.genre}]);
+          data.watchLater.push({ anime: anime.title, genres: anime.genre });
           await data.save().catch((e) => console.log(e));
         }
 
         const watchLaterEmbed = new discord.MessageEmbed()
-          .setColor("#F4D03F")
-          .setAuthor("Anime added to watch later 🙇‍♀️")
+          .setColor('#F4D03F')
+          .setAuthor('Anime added to watch later 🙇‍♀️')
           .setTitle(anime.title)
           .setDescription(anime.desc)
           .setThumbnail(anime.image)
           .addFields(
-            { name: "Status", value: `\`${anime.status}\``, inline: true },
+            { name: 'Status', value: `\`${anime.status}\``, inline: true },
             {
-              name: "Episode Count",
+              name: 'Episode Count',
               value: `\`${anime.epCount}\``,
               inline: true,
             }
@@ -81,6 +82,6 @@ module.exports.run = async (bot, message, args) => {
 };
 
 module.exports.help = {
-  name: "later",
-  aliases: ["watchlater", "watchLater", "wlater", "wl", "l"],
+  name: 'later',
+  aliases: ['watchlater', 'watchLater', 'wlater', 'wl', 'l'],
 };

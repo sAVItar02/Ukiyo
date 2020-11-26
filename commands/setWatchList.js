@@ -50,14 +50,14 @@ module.exports.run = async (bot, message, args) => {
           const newData = new Data({
             uid: user.id,
             name: bot.users.cache.get(user.id).username,
-            watchList: [{anime: anime.title, genres:anime.genre}],
+            watchList: [{anime: anime.title, genres: anime.genre}],
             watchLater: [],
             recommended: [],
           });
 
           await newData.save().catch((e) => console.log(e));
         } else {
-          data.watchList.push([{anime: anime.title, genres:anime.genre}]);
+          data.watchList.push({anime: anime.title, genres: anime.genre});
           await data.save().catch((e) => console.log(e));
         }
         const animeEmbed = new discord.MessageEmbed()
@@ -75,7 +75,7 @@ module.exports.run = async (bot, message, args) => {
             }
           );
 
-        mssage.channel.send(animeEmbed);
+        message.channel.send(animeEmbed);
       });
     });
 };
