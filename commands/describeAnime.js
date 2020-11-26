@@ -40,7 +40,12 @@ module.exports.run = async (bot, message, args) => {
         status: animeData.media[0].status,
         epCount: animeData.media[0].episodes,
         duration: animeData.media[0].duration,
+        genres: animeData.media[0].genres,
       };
+      let genre='';
+        anime.genres.forEach(element => {
+          genre+=`\`${element}\` `
+        });
       const animeEmbed = new discord.MessageEmbed()
         .setColor("#FF7F49")
         .setTitle(anime.title)
@@ -56,6 +61,11 @@ module.exports.run = async (bot, message, args) => {
           {
             name: "Duration",
             value: `\`${anime.duration}m\``,
+            inline: true,
+          },
+          {
+            name: "Genre",
+            value: `${genre}`,
             inline: true,
           }
         );
