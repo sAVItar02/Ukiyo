@@ -21,17 +21,20 @@ module.exports.run = async (bot, message, args) => {
       const recmd = data.recommended;
       let embed = new discord.MessageEmbed();
       for (i = 0; i < recmd.length; ) {
+        let genre='';
+        recmd[i].genres.forEach(element => {
+          genre+=`\`${element}\` `
+        });
         if (i != 0 && i % 5 == 0) {
           pages.push(embed);
           embed = new discord.MessageEmbed();
         }
         embed
         .setColor('#9966cc')
-        .addField(`${i + 1}. ${recmd[i++]}`, '____________');
+        .addField(`${i + 1}. ${recmd[i++].anime}`, `${genre}`);
       }
       pages.push(embed);
     }
-    // console.log(pages);
     const emojiList = ['⏮', '⏭'];
     const timeOut = 200000;
     pagination(message, pages, emojiList, timeOut);
