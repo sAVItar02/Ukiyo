@@ -63,7 +63,7 @@ module.exports.run = async (bot, message, args) => {
           embed = new discord.MessageEmbed();
         }
         embed
-          .setColor('#241E6F')
+          .setColor('#C92A82')
           .addField(`${i + 1}. ${animeData[i++].title.romaji}`, `${date}`);
       }
       pages.push(embed);
