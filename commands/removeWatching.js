@@ -7,14 +7,16 @@ module.exports.run = async (bot, message, args) => {
     return;
   }
 
-  args = args.map(e => e.charAt(0).toUpperCase() + e.substr(1));
+  
+
+  args = args.map(e => e.charAt(0).toUpperCase() + e.substr(1)).join(' ');
   console.log(args);
-  args = args.join(' ');
-  console.log(args);
+
+  const query = { 'anime': { $regex: new RegExp(`^${args}$`), $options: 'i' } };
 
   Data.findOneAndUpdate(
     { uid: user.id },
-    { $pull: { watchList: { anime: args } } },
+    { $pull: { watchList: query } },
     async (err, data) => {
       if (err) {
         console.log(err);

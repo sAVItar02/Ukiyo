@@ -13,9 +13,11 @@ module.exports.run = async (bot, message, args) => {
   args = args.join(' ');
   console.log(args);
 
+  const query = { 'anime': { $regex: new RegExp(`^${args}$`), $options: 'i' } };
+
   Data.findOneAndUpdate(
     { uid: user.id },
-    { $pull: { recommended: { anime: args } } },
+    { $pull: { recommended: query } },
     async (err, data) => {
       if (err) {
         console.log(err);
