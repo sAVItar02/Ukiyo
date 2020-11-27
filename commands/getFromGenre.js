@@ -1,4 +1,4 @@
-const query = require("../graphql");
+const query = require("../graphql/genreQuery");
 const fetch = require("node-fetch");
 const discord = require("discord.js");
 
@@ -6,6 +6,7 @@ module.exports.run = async (bot, message, args) => {
   const url = `https://graphql.anilist.co`;
   if (!args[0]){
     message.channel.send('You want to search with genre and not mention it? Weird🙃');
+    return;
     }
 
   let variables = {
