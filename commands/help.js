@@ -35,7 +35,8 @@ module.exports.run = async (bot, message, args) => {
           inline: true,
         },
         { name: '🆕 Upcoming ', value: `\`uki help new\``, inline: true },
-        { name: '🔖 Genre ', value: `\`uki help genre\``, inline: true }
+        { name: '🔖 Genre ', value: `\`uki help genre\``, inline: true },
+        { name: '🎋 Random ', value: `\`uki help random\``, inline: true },
       );
     message.channel.send(Embed);
   } else if (args[0] === 'recommend') {
@@ -165,7 +166,20 @@ module.exports.run = async (bot, message, args) => {
       )
       .addFields({
         name: '🔎Find an anime in this genre',
-        value: 'Aliases: `genre`, `type`',
+        value: 'Aliases: `genre`, `type`, `category`',
+      });
+    message.channel.send(embed);
+  }
+  else if (args[0] === 'random') {
+    const embed = new discord.MessageEmbed()
+      .setColor('#FFFE00')
+      .setTitle('🤓Weebs looking for something new!')
+      .setDescription(
+        'To find an anime of a genre: `uki <alias>`'
+      )
+      .addFields({
+        name: '🎋Get a random anime',
+        value: 'Aliases: `random`',
       });
     message.channel.send(embed);
   }
