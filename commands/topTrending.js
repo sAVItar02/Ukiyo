@@ -58,5 +58,5 @@ module.exports.run = async (bot, message, args) => {
 
 module.exports.help = {
   name: 'trending',
-  aliases: ['trend', 'trending', 'trnding'],
+  aliases: ['trend', 'trending', 'hot'],
 };
