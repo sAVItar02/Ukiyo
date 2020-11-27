@@ -38,7 +38,7 @@ module.exports.run = async (bot, message, args) => {
       let anime = {
         title: animeData.media[0].title.romaji,
         english: animeData.media[0].title.english,
-        image: animeData.media[0].coverImage.medium,
+        image: animeData.media[0].coverImage.large,
         desc: animeData.media[0].description.split('.')[0],
         status: animeData.media[0].status,
         epCount: animeData.media[0].episodes,
