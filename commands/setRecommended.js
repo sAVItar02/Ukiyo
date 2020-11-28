@@ -75,29 +75,24 @@ module.exports.run = async (bot, message, args) => {
           await newData.save().catch((err) => console.log(err));
           SendEmbed();
         } else {
-          Data.findOne({ uid: taggedID }, async (err, data) => {
-            let i = 0;
-
-            for (i = 0; i < data.recommended.length; i++) {
-              if (
-                data.recommended[i].slug ===
-                slugify(anime.title, { lower: true })
-              ) {
-                message.channel.send(
-                  "That anime already exists in the users recommended list, why dont you try suggesting another! 🍙"
-                );
-                return;
-              }
+          for (i = 0; i < data.recommended.length; i++) {
+            if (
+              data.recommended[i].slug === slugify(anime.title, { lower: true })
+            ) {
+              message.channel.send(
+                "That anime already exists in the users recommended list, why dont you try suggesting another! 🍙"
+              );
+              return;
             }
-            data.recommended.push({
-              slug: slugify(anime.title, { lower: true }),
-              recommendedBy: taggedID,
-              anime: anime.title,
-              genres: anime.genre,
-            });
-            await data.save().catch((err) => console.log(err));
-            SendEmbed();
+          }
+          data.recommended.push({
+            slug: slugify(anime.title, { lower: true }),
+            recommendedBy: taggedID,
+            anime: anime.title,
+            genres: anime.genre,
           });
+          await data.save().catch((err) => console.log(err));
+          SendEmbed();
         }
 
         function SendEmbed() {
