@@ -48,6 +48,10 @@ const userSchema = new mongoose.Schema({
   ],
   recommended: [
     {
+      recommendedBy: {
+        type: String,
+        trim: true,
+      },
       slug: {
         type: String,
         trim: true,

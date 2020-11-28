@@ -66,6 +66,7 @@ module.exports.run = async (bot, message, args) => {
             recommended: [
               {
                 slug: slugify(anime.title, { lower: true }),
+                recommendedBy: taggedID,
                 anime: anime.title,
                 genres: anime.genre,
               },
@@ -90,6 +91,7 @@ module.exports.run = async (bot, message, args) => {
             }
             data.recommended.push({
               slug: slugify(anime.title, { lower: true }),
+              recommendedBy: taggedID,
               anime: anime.title,
               genres: anime.genre,
             });
