@@ -4,6 +4,10 @@ const discord = require("discord.js");
 
 module.exports.run = async (bot, message, args) => {
   const url = `https://graphql.anilist.co`;
+  if(!args[0]){
+    message.channel.send('You need to mention the anime😒');
+    return;
+  }
   if (args.length > 1) {
     args = args.join("-");
   } else {
@@ -31,7 +35,9 @@ module.exports.run = async (bot, message, args) => {
   fetch(url, options)
     .then((response) => response.json())
     .then((result) => {
+      try{
       const animeData = result.data.Page;
+       
       let anime = {
         title: animeData.media[0].title.romaji,
         english: animeData.media[0].title.english,
@@ -71,7 +77,13 @@ module.exports.run = async (bot, message, args) => {
         );
 
       message.channel.send(animeEmbed);
+      }catch(err)
+      {
+        console.log(err);
+        message.channel.send('😕You sure that is the anime\'s name?');
+      }
     });
+  
 };
 
 module.exports.help = {
