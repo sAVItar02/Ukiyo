@@ -20,7 +20,7 @@ module.exports.run = async (bot, message, args) => {
 
   const url = `https://graphql.anilist.co`;
   if (args.length > 1) {
-    args = args.join("-");
+    args = args.join(" ");
   } else {
     args = args[0];
   }
