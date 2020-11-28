@@ -20,18 +20,21 @@ module.exports.run = async (bot, message, args) => {
     } else {
       const recmd = data.recommended;
       let embed = new discord.MessageEmbed();
-      for (i = 0; i < recmd.length; ) {
-        let genre='';
-        recmd[i].genres.forEach(element => {
-          genre+=`\`${element}\` `
+      for (i = 0; i < recmd.length; i++) {
+        let genre = '';
+        recmd[i].genres.forEach((element) => {
+          genre += `\`${element}\` `;
         });
         if (i != 0 && i % 5 == 0) {
           pages.push(embed);
           embed = new discord.MessageEmbed();
         }
         embed
-        .setColor('#9966cc')
-        .addField(`${i + 1}. ${recmd[i++].anime}`, `${genre}`);
+          .setColor('#9966cc')
+          .addField(
+            `${i + 1}. ${recmd[i].anime}`,
+            `<@${recmd[i].recommendedBy}>\n${genre}`
+          );
       }
       pages.push(embed);
     }
