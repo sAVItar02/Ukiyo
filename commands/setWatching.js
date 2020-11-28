@@ -6,11 +6,7 @@ const { default: slugify } = require("slugify");
 
 module.exports.run = async (bot, message, args) => {
   let user = message.author;
-  if (args.length > 1) {
-    args = args.join(" ");
-  } else {
-    args = args[0];
-  }
+  args = args.join(" ");
 
   const url = `https://graphql.anilist.co`;
 
