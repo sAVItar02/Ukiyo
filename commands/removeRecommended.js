@@ -1,10 +1,11 @@
-const fetch = require("node-fetch");
-const Data = require("../models/userModel");
-const query = require("../graphql");
-const slugify = require("slugify");
+const fetch = require('node-fetch');
+const Data = require('../models/userModel');
+const query = require('../graphql');
+const slugify = require('slugify');
 
 module.exports.run = async (bot, message, args) => {
   let user = message.author;
+  let check = false;
   const url = `https://graphql.anilist.co`;
 
   if (message.mentions.users.first()) {
@@ -12,7 +13,7 @@ module.exports.run = async (bot, message, args) => {
     return;
   }
 
-  args = args.join(" ");
+  args = args.join(' ');
 
   let variables = {
     search: args,
@@ -21,10 +22,10 @@ module.exports.run = async (bot, message, args) => {
   };
 
   let options = {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
     },
     body: JSON.stringify({
       query: query,
@@ -53,22 +54,21 @@ module.exports.run = async (bot, message, args) => {
             console.log(err);
             return;
           }
-          if (data.recommended.length === 0) {
-            message.channel.send(
-              "Looks like you tried removing something that doesnt exist! BAKA!"
-            );
-          }
           data.recommended.forEach((element) => {
             if (element.slug === slugify(anime.title, { lower: true })) {
-              message.channel.send(
-                `\`\`\`css\n[${anime.title} was removed]\`\`\``
-              );
+              check = true;
               return;
             }
-            message.channel.send(
-              "Looks like you tried removing something that doesnt exist! BAKA!"
-            );
           });
+
+          if (check)
+            message.channel.send(
+              `\`\`\`css\n[${anime.title} was removed]\`\`\``
+            );
+          else
+            message.channel.send(
+              "Looks like you tried removing something that doesn't exist! BAKA!"
+            );
         }
       );
     });
@@ -77,6 +77,6 @@ module.exports.run = async (bot, message, args) => {
 };
 
 module.exports.help = {
-  name: "removeRecommended",
-  aliases: ["rrec", "remrec", "rmr", "rr"],
+  name: 'removeRecommended',
+  aliases: ['rrec', 'remrec', 'rmr', 'rr'],
 };

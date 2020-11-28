@@ -1,30 +1,78 @@
 const Data = require('../models/userModel');
+const query = require('../graphql');
+const slugify = require('slugify');
+const fetch = require('node-fetch');
 
 module.exports.run = async (bot, message, args) => {
   let user = message.author;
+
+  let check = false;
+  const url = `https://graphql.anilist.co`;
+
   if (message.mentions.users.first()) {
-    message.channel.send("Baka! Don't fiddle with other user\'s anime list! 👿");
+    message.channel.send("Baka! Don't fiddle with other user's anime list! 👿");
     return;
   }
 
-  
+  args = args.join(' ');
 
-  args = args.map(e => e.charAt(0).toUpperCase() + e.substr(1)).join(' ');
-  console.log(args);
+  let variables = {
+    search: args,
+    page: 1,
+    perPage: 10,
+  };
 
-  const query = { 'anime': { $regex: new RegExp(`^${args}$`), $options: 'i' } };
+  let options = {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
+    },
+    body: JSON.stringify({
+      query: query,
+      variables: variables,
+    }),
+  };
 
-  Data.findOneAndUpdate(
-    { uid: user.id },
-    { $pull: { watchList: query } },
-    async (err, data) => {
-      if (err) {
-        console.log(err);
-        return;
-      }
-      message.channel.send(`\`\`\`css\n[${args} was removed]\`\`\``);
-    }
-  );
+  fetch(url, options)
+    .then((response) => response.json())
+    .then((result) => {
+      const animeData = result.data.Page;
+      let anime = {
+        title: animeData.media[0].title.romaji,
+        english: animeData.media[0].title.english,
+      };
+
+      Data.findOneAndUpdate(
+        { uid: user.id },
+        {
+          $pull: {
+            watchList: { slug: slugify(anime.title, { lower: true }) },
+          },
+        },
+        async (err, data) => {
+          if (err) {
+            console.log(err);
+            return;
+          }
+          data.watchList.forEach((element) => {
+            if (element.slug === slugify(anime.title, { lower: true })) {
+              check = true;
+              return;
+            }
+          });
+
+          if (check)
+            message.channel.send(
+              `\`\`\`css\n[${anime.title} was removed]\`\`\``
+            );
+          else
+            message.channel.send(
+              "Looks like you tried removing something that doesn't exist! BAKA!"
+            );
+        }
+      );
+    });
 };
 
 module.exports.help = {
