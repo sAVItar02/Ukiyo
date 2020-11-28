@@ -12,44 +12,56 @@ const userSchema = new mongoose.Schema({
   },
   watchList: [
     {
-      anime:{
-      type: String,
-      trim: true,
-      },
-      genres:[
-        {
+      slug: {
         type: String,
         trim: true,
-        }
-      ]
+      },
+      anime: {
+        type: String,
+        trim: true,
+      },
+      genres: [
+        {
+          type: String,
+          trim: true,
+        },
+      ],
     },
   ],
   watchLater: [
     {
-      anime:{
-      type: String,
-      trim: true,
-      },
-      genres:[
-        {
+      slug: {
         type: String,
         trim: true,
-        }
-      ]
+      },
+      anime: {
+        type: String,
+        trim: true,
+      },
+      genres: [
+        {
+          type: String,
+          trim: true,
+        },
+      ],
     },
   ],
   recommended: [
     {
-      anime:{
-      type: String,
-      trim: true,
-      },
-      genres:[
-        {
+      slug: {
         type: String,
         trim: true,
-        }
-      ]
+      },
+      anime: {
+        type: String,
+        trim: true,
+      },
+      genres: [
+        {
+          type: String,
+          trim: true,
+        },
+      ],
     },
   ],
 });

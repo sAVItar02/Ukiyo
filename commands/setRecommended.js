@@ -2,6 +2,7 @@ const Data = require("../models/userModel");
 const discord = require("discord.js");
 const fetch = require("node-fetch");
 const query = require("../graphql");
+const slugify = require("slugify");
 
 module.exports.run = async (bot, message, args) => {
   if (!args[0].startsWith("<@")) {
@@ -53,7 +54,7 @@ module.exports.run = async (bot, message, args) => {
         desc: animeData.media[0].description.split(".")[0],
         status: animeData.media[0].status,
         epCount: animeData.media[0].episodes,
-        genre: animeData.media[0].genres
+        genre: animeData.media[0].genres,
       };
 
       Data.findOne({ uid: taggedID }, async (err, data) => {
@@ -62,29 +63,58 @@ module.exports.run = async (bot, message, args) => {
             uid: taggedID,
             watchList: [],
             watchLater: [],
-            recommended: [{anime: anime.title, genres:anime.genre}],
+            recommended: [
+              {
+                slug: slugify(anime.title, { lower: true }),
+                anime: anime.title,
+                genres: anime.genre,
+              },
+            ],
           });
           await newData.save().catch((err) => console.log(err));
+          SendEmbed();
         } else {
-          data.recommended.push({anime: anime.title, genres:anime.genre});;
-          await data.save().catch((err) => console.log(err));
+          Data.findOne({ uid: taggedID }, async (err, data) => {
+            let i = 0;
+
+            for (i = 0; i < data.recommended.length; i++) {
+              if (
+                data.recommended[i].slug ===
+                slugify(anime.title, { lower: true })
+              ) {
+                message.channel.send(
+                  "That anime already exists in the users recommended list, why dont you try suggesting another! 🍙"
+                );
+                return;
+              }
+            }
+            data.recommended.push({
+              slug: slugify(anime.title, { lower: true }),
+              anime: anime.title,
+              genres: anime.genre,
+            });
+            await data.save().catch((err) => console.log(err));
+            SendEmbed();
+          });
         }
 
-        const recommendEmbed = new discord.MessageEmbed()
-          .setColor("#5DADEC")
-          .setAuthor(`Anime recommended! 📢`)
-          .setTitle(anime.title)
-          .setDescription(anime.desc)
-          .setThumbnail(anime.image)
-          .addFields(
-            { name: "Status", value: `\`${anime.status}\``, inline: true },
-            {
-              name: "Episode Count",
-              value: `\`${anime.epCount}\``,
-              inline: true,
-            }
-          );
-        message.channel.send(recommendEmbed);
+        function SendEmbed() {
+          const recommendEmbed = new discord.MessageEmbed()
+            .setColor("#5DADEC")
+            .setAuthor(`Anime recommended! 📢`)
+            .setTitle(anime.title)
+            .setDescription(anime.desc)
+            .setThumbnail(anime.image)
+            .addFields(
+              { name: "Status", value: `\`${anime.status}\``, inline: true },
+              {
+                name: "Episode Count",
+                value: `\`${anime.epCount}\``,
+                inline: true,
+              }
+            );
+          message.channel.send(recommendEmbed);
+        }
       });
     });
 };
