@@ -6,5 +6,13 @@ const remindSchema = new mongoose.Schema({
       type: String,
       trim: true,
     },
+    anime: {
+      type: String,
+      trim: true,
+    },
+    date: {
+      type: Date,
+      trim: true,
+    },
   },
 });
