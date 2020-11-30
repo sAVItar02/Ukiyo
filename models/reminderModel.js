@@ -11,8 +11,11 @@ const remindSchema = new mongoose.Schema({
       trim: true,
     },
     date: {
-      type: Date,
+      type: String,
       trim: true,
     },
   },
 });
+
+const reminder = mongoose.model("reminders", remindSchema);
+module.exports = reminder;

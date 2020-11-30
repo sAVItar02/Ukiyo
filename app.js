@@ -1,6 +1,7 @@
 const dotenv = require("dotenv");
 const mongoose = require("mongoose");
 const fs = require("fs");
+const sendReminder = require("./sendReminder");
 
 const Discord = require("discord.js");
 const bot = new Discord.Client();
@@ -47,7 +48,7 @@ fs.readdir("./commands/", (err, files) => {
 
 //BOT STUFF
 
-bot.on("ready", () => {
+bot.on("ready", async () => {
   console.log(`Logged in as ${bot.user.tag}!`);
 });
 

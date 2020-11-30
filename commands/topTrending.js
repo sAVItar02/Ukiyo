@@ -1,13 +1,12 @@
-const query = require('./../graphQl/trendingQuery');
-const fetch = require('node-fetch');
-const discord = require('discord.js');
-const pagination = require('discord.js-pagination');
+const query = require("./../graphQl/trendingQuery");
+const fetch = require("node-fetch");
+const discord = require("discord.js");
+const pagination = require("discord.js-pagination");
 
 module.exports.run = async (bot, message, args) => {
-  let animeCount=10;
-  if(args[0])
-    animeCount=args[0];
-    
+  let animeCount = 10;
+  if (args[0]) animeCount = args[0];
+
   const url = `https://graphql.anilist.co`;
   let pages = [];
   let variables = {
@@ -16,10 +15,10 @@ module.exports.run = async (bot, message, args) => {
   };
 
   let options = {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
+      "Content-Type": "application/json",
+      Accept: "application/json",
     },
     body: JSON.stringify({
       query: query,
@@ -34,7 +33,7 @@ module.exports.run = async (bot, message, args) => {
 
       let embed = new discord.MessageEmbed();
       for (i = 0; i < animeData.length; ) {
-        let genre = '';
+        let genre = "";
         animeData[i].genres.forEach((element) => {
           genre += `\`${element}\` `;
         });
@@ -43,19 +42,18 @@ module.exports.run = async (bot, message, args) => {
           embed = new discord.MessageEmbed();
         }
         embed
-          .setColor('#99F417')
+          .setColor("#99F417")
           .addField(`${i + 1}. ${animeData[i++].title.romaji}`, `${genre}`);
       }
       pages.push(embed);
 
-      const emojiList = ['⏮', '⏭'];
+      const emojiList = ["⏮", "⏭"];
       const timeOut = 200000;
       pagination(message, pages, emojiList, timeOut);
-
     });
 };
 
 module.exports.help = {
-  name: 'trending',
-  aliases: ['trend', 'trending', 'hot'],
+  name: "trending",
+  aliases: ["trend", "trending", "hot"],
 };
