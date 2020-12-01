@@ -24,7 +24,7 @@ mongoose
   .then(() => console.log("DB connection successful!"));
 
 //READ COMMAND FILES
-fs.readdir("./commands/", (err, files) => {
+fs.readdir("commands/", (err, files) => {
   if (err) console.error;
 
   let jsfile = files.filter((f) => f.split(".").pop() === "js");
