@@ -21,6 +21,12 @@ module.exports = `query ($search: String, $page: Int, $perPage: Int) {
         description
         duration
         episodes
+        coverImage {
+          extraLarge
+          large
+          medium
+          color
+        }
       }
     }
   }`

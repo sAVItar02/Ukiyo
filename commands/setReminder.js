@@ -1,13 +1,13 @@
-const Data = require("../models/reminderModel");
-const discord = require("discord.js");
-const fetch = require("node-fetch");
-const query = require("./../graphQl/reminderQuery");
-const slugify = require("slugify");
+const Data = require('../models/reminderModel');
+const fetch = require('node-fetch');
+const query = require('./../graphQl/reminderQuery');
+const discord = require('discord.js');
+
 
 module.exports.run = async (bot, message, args) => {
   const user = message.author;
   const url = `https://graphql.anilist.co`;
-  args = args.join(" ");
+  args = args.join(' ');
   let variables = {
     search: args,
     page: 1,
@@ -15,10 +15,10 @@ module.exports.run = async (bot, message, args) => {
   };
 
   let options = {
-    method: "POST",
+    method: 'POST',
     headers: {
-      "Content-Type": "application/json",
-      Accept: "application/json",
+      'Content-Type': 'application/json',
+      Accept: 'application/json',
     },
     body: JSON.stringify({
       query: query,
@@ -33,39 +33,39 @@ module.exports.run = async (bot, message, args) => {
       let anime = {
         title: animeData.media[0].title.romaji,
         english: animeData.media[0].title.english,
-        airDate: animeData.media[0].nextAiringEpisode.airingAt,
-        timeRemaining: animeData.media[0].nextAiringEpisode.timeUntilAiring,
-        episodeNumebr: animeData.media[0].nextAiringEpisode.episode,
+        airDate: animeData.media[0].nextAiringEpisode.airingAt*1000,
+        timeRemaining: animeData.media[0].nextAiringEpisode.timeUntilAiring*1000,
+        episodeNumber: animeData.media[0].nextAiringEpisode.episode,
+        image:animeData.media[0].coverImage.large
       };
 
-      // Data.find({ date: Date.now() }, async (err, data) => {
-      //   if (!err) {
-      //     console.log(data);
-      //     data.push({
-      //       uid: user.id,
-      //       anime: anime.title,
-      //       date: anime.airDate,
-      //     });
-
-      //     await data.save().catch((e) => console.log(e));
-      //   } else {
-      //     console.log(err);
-      //   }
-      // });
-
       await Data.create({
-        reminders: {
           uid: user.id,
           anime: anime.title,
           date: anime.airDate * 1000,
-        },
       });
 
-      message.channel.send(`Reminder set!! for ${anime.title} ⏲`);
+        const remindEmbed = new discord.MessageEmbed()
+          .setColor("#F4D03F")
+          .setAuthor("Anime added to Reminders ⏰")
+          .setTitle(anime.title)
+          .setThumbnail(anime.image)
+          .addFields(
+            { name: "Episode Number", value: `\`${anime.episodeNumber}\``, inline: true },
+            {
+              name: "Episode Date",
+              value: `\`${new Date(anime.airDate)}\``,
+              inline: true,
+            },
+          
+          );
+
+        message.channel.send(remindEmbed);
+      
     });
 };
 
 module.exports.help = {
-  name: "remind",
-  aliases: ["remindme", "addreminder", "addrem", "rem"],
+  name: 'remind',
+  aliases: ['remindme', 'addreminder', 'addrem', 'rem'],
 };
