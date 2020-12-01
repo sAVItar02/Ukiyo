@@ -37,6 +37,8 @@ module.exports.run = async (bot, message, args) => {
         { name: '🆕 Upcoming ', value: `\`uki help new\``, inline: true },
         { name: '🔖 Genre ', value: `\`uki help genre\``, inline: true },
         { name: '🎋 Random ', value: `\`uki help random\``, inline: true },
+        { name: '⏰ Reminder ', value: `\`uki help reminder\``, inline: true },
+        { name: '💻 Develop ', value: `\`uki help develop\``, inline: true }
       );
     message.channel.send(Embed);
   } else if (args[0] === 'recommend') {
@@ -169,17 +171,39 @@ module.exports.run = async (bot, message, args) => {
         value: 'Aliases: `genre`, `type`, `category`',
       });
     message.channel.send(embed);
-  }
-  else if (args[0] === 'random') {
+  } else if (args[0] === 'random') {
     const embed = new discord.MessageEmbed()
       .setColor('#FFFE00')
       .setTitle('🤓Weebs looking for something new!')
-      .setDescription(
-        'To find an anime of a genre: `uki <alias>`'
-      )
+      .setDescription('To find an anime of a genre: `uki <alias>`')
       .addFields({
         name: '🎋Get a random anime',
         value: 'Aliases: `random`',
+      });
+    message.channel.send(embed);
+  } else if (args[0] === 'reminder') {
+    const embed = new discord.MessageEmbed()
+      .setColor('#FFFE00')
+      .setTitle(
+        ":reminder_ribbon: Can't remember when the next episode will air?"
+      )
+      .setDescription('To set reminder for anime episode: `uki <alias> <anime>`')
+      .addFields({
+        name: '⏰Set reminder',
+        value: 'Aliases:  `remindme`, `addreminder`, `addrem`, `rem`, `reminder`',
+      });
+    message.channel.send(embed);
+  }
+  else if (args[0] === 'support') {
+    const embed = new discord.MessageEmbed()
+      .setColor('#FFFE00')
+      .setTitle(
+        "💻 Want to help make the bot better?"
+      )
+      .setDescription('To get the github repo link: `uki <alias>`')
+      .addFields({
+        name: '💁‍♂️Develop with us',
+        value: 'Aliases:  `dev`, `develop`, `support`',
       });
     message.channel.send(embed);
   }
