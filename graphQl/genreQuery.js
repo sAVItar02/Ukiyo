@@ -1,4 +1,4 @@
-module.exports = `query ($search: String, $page: Int, $perPage: Int, $genre:String) {
+let query = `query ($search: String, $page: Int, $perPage: Int, $genre:String) {
     Page (page: $page, perPage: $perPage) {
       pageInfo {
         total
@@ -27,4 +27,6 @@ module.exports = `query ($search: String, $page: Int, $perPage: Int, $genre:Stri
         }
       }
     }
-  }`
+  }`;
+
+module.exports = query;
