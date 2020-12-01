@@ -1,12 +1,12 @@
-const Data = require('../models/reminderModel');
-const fetch = require('node-fetch');
-const query = require('./../graphQl/reminderQuery');
-const discord = require('discord.js');
+const Data = require("../models/reminderModel");
+const fetch = require("node-fetch");
+const query = require("./../graphQl/reminderQuery");
+const discord = require("discord.js");
 
 module.exports.run = async (bot, message, args) => {
   const user = message.author;
   const url = `https://graphql.anilist.co`;
-  args = args.join(' ');
+  args = args.join(" ");
   let variables = {
     search: args,
     page: 1,
@@ -14,10 +14,10 @@ module.exports.run = async (bot, message, args) => {
   };
 
   let options = {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
+      "Content-Type": "application/json",
+      Accept: "application/json",
     },
     body: JSON.stringify({
       query: query,
@@ -29,6 +29,14 @@ module.exports.run = async (bot, message, args) => {
     .then((response) => response.json())
     .then(async (result) => {
       const animeData = result.data.Page;
+
+      if (!animeData.media[0].nextAiringEpisode) {
+        message.channel.send(
+          "No airing date available for this anime! 😓 `The anime should be ongoing!` "
+        );
+        return;
+      }
+
       let anime = {
         title: animeData.media[0].title.romaji,
         english: animeData.media[0].title.english,
@@ -39,28 +47,30 @@ module.exports.run = async (bot, message, args) => {
         image: animeData.media[0].coverImage.large,
       };
 
-      let date = new Date(anime.airDate).toISOString().split('T')[0];
-      console.log(date);
+      let date = new Date(anime.airDate).toISOString().split("T")[0];
 
       await Data.create({
         uid: user.id,
-        anime: anime.title,
+        anime: {
+          episode: anime.episodeNumber,
+          title: anime.title,
+        },
         date: date,
       });
 
       const remindEmbed = new discord.MessageEmbed()
-        .setColor('#F4D03F')
-        .setAuthor('Anime added to Reminders ⏰')
+        .setColor("#F4D03F")
+        .setAuthor("Anime added to Reminders ⏰")
         .setTitle(anime.title)
         .setThumbnail(anime.image)
         .addFields(
           {
-            name: 'Episode Number',
+            name: "Episode Number",
             value: `\`${anime.episodeNumber}\``,
             inline: true,
           },
           {
-            name: 'Episode Date',
+            name: "Episode Date",
             value: `\`${new Date(anime.airDate)}\``,
             inline: true,
           }
@@ -71,6 +81,6 @@ module.exports.run = async (bot, message, args) => {
 };
 
 module.exports.help = {
-  name: 'remind',
-  aliases: ['remindme', 'addreminder', 'addrem', 'rem'],
+  name: "remind",
+  aliases: ["remindme", "addreminder", "addrem", "rem"],
 };

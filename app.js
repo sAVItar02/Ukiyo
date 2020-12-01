@@ -4,6 +4,7 @@ const fs = require("fs");
 const sendReminder = require("./sendReminder");
 
 const Discord = require("discord.js");
+const { send } = require("process");
 const bot = new Discord.Client();
 
 bot.commands = new Discord.Collection();
@@ -50,13 +51,14 @@ fs.readdir("./commands/", (err, files) => {
 
 bot.on("ready", async () => {
   console.log(`Logged in as ${bot.user.tag}!`);
+  sendReminder(bot);
 });
 
 bot.on("message", async (message) => {
   if (message.channel.type === "dm") return;
   if (message.author.bot) return;
 
-  const prefix = `${process.env.PREFIX} `;
+  const prefix = `${process.env.PREFIX || process.env.PREFIX.toUpperCase()} `;
 
   if (!message.content.startsWith(prefix)) return;
 

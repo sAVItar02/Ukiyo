@@ -1,4 +1,4 @@
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 const remindSchema = new mongoose.Schema({
   uid: {
@@ -6,8 +6,14 @@ const remindSchema = new mongoose.Schema({
     trim: true,
   },
   anime: {
-    type: String,
-    trim: true,
+    episode: {
+      type: Number,
+      trim: true,
+    },
+    title: {
+      type: String,
+      trim: true,
+    },
   },
   date: {
     type: Date,
@@ -15,5 +21,5 @@ const remindSchema = new mongoose.Schema({
   },
 });
 
-const reminder = mongoose.model('reminder', remindSchema);
+const reminder = mongoose.model("reminder", remindSchema);
 module.exports = reminder;
