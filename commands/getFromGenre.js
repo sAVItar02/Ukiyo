@@ -1,17 +1,19 @@
-const query = require("../graphql/genreQuery");
+const query = require("./../graphql/genreQuery");
 const fetch = require("node-fetch");
 const discord = require("discord.js");
 
 module.exports.run = async (bot, message, args) => {
   const url = `https://graphql.anilist.co`;
-  if (!args[0]){
-    message.channel.send('You want to search with genre and not mention it? Weird🙃');
+  if (!args[0]) {
+    message.channel.send(
+      "You want to search with genre and not mention it? Weird🙃"
+    );
     return;
-    }
+  }
 
   let variables = {
-    "perPage": 5000,
-    "genre":args[0],
+    perPage: 5000,
+    genre: args[0],
   };
 
   let options = {
@@ -29,7 +31,10 @@ module.exports.run = async (bot, message, args) => {
   fetch(url, options)
     .then((response) => response.json())
     .then((result) => {
-      const animeData = result.data.Page.media[Math.floor(Math.random()*result.data.Page.media.length)];
+      const animeData =
+        result.data.Page.media[
+          Math.floor(Math.random() * result.data.Page.media.length)
+        ];
       let anime = {
         title: animeData.title.romaji,
         english: animeData.title.english,
@@ -40,10 +45,10 @@ module.exports.run = async (bot, message, args) => {
         duration: animeData.duration,
         genres: animeData.genres,
       };
-      let genre='';
-        anime.genres.forEach(element => {
-          genre+=`\`${element}\` `
-        });
+      let genre = "";
+      anime.genres.forEach((element) => {
+        genre += `\`${element}\` `;
+      });
       const animeEmbed = new discord.MessageEmbed()
         .setColor("#EE8BC1")
         .setTitle(anime.title)
@@ -73,6 +78,6 @@ module.exports.run = async (bot, message, args) => {
 };
 
 module.exports.help = {
-  name: 'genre',
-  aliases: ['type', 'category'],
+  name: "genre",
+  aliases: ["type", "category"],
 };
