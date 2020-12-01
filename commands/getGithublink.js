@@ -1,5 +1,5 @@
 module.exports.run = async (bot, message, args) => {
-  message.channel.send('Be a part of the developer team, contribute to the repository with prs')
+  message.channel.send('Be a part of the developer team, coming soon!')
 };
 
 module.exports.help = {
