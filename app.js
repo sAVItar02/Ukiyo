@@ -4,7 +4,6 @@ const fs = require("fs");
 const sendReminder = require("./sendReminder");
 
 const Discord = require("discord.js");
-const { send } = require("process");
 const bot = new Discord.Client();
 
 bot.commands = new Discord.Collection();
