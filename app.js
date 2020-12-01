@@ -51,6 +51,7 @@ fs.readdir(`${__dirname}/commands/`, (err, files) => {
 bot.on("ready", async () => {
   console.log(`Logged in as ${bot.user.tag}!`);
   sendReminder(bot);
+  client.user.setActivity("Anime | uki help", { type: "WATCHING" });
 });
 
 bot.on("message", async (message) => {
