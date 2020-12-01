@@ -3,7 +3,6 @@ const fetch = require('node-fetch');
 const query = require('./../graphQl/reminderQuery');
 const discord = require('discord.js');
 
-
 module.exports.run = async (bot, message, args) => {
   const user = message.author;
   const url = `https://graphql.anilist.co`;
@@ -33,35 +32,41 @@ module.exports.run = async (bot, message, args) => {
       let anime = {
         title: animeData.media[0].title.romaji,
         english: animeData.media[0].title.english,
-        airDate: animeData.media[0].nextAiringEpisode.airingAt*1000,
-        timeRemaining: animeData.media[0].nextAiringEpisode.timeUntilAiring*1000,
+        airDate: animeData.media[0].nextAiringEpisode.airingAt * 1000,
+        timeRemaining:
+          animeData.media[0].nextAiringEpisode.timeUntilAiring * 1000,
         episodeNumber: animeData.media[0].nextAiringEpisode.episode,
-        image:animeData.media[0].coverImage.large
+        image: animeData.media[0].coverImage.large,
       };
 
+      let date = new Date(anime.airDate).toISOString().split('T')[0];
+      console.log(date);
+
       await Data.create({
-          uid: user.id,
-          anime: anime.title,
-          date: anime.airDate * 1000,
+        uid: user.id,
+        anime: anime.title,
+        date: date,
       });
 
-        const remindEmbed = new discord.MessageEmbed()
-          .setColor("#F4D03F")
-          .setAuthor("Anime added to Reminders ⏰")
-          .setTitle(anime.title)
-          .setThumbnail(anime.image)
-          .addFields(
-            { name: "Episode Number", value: `\`${anime.episodeNumber}\``, inline: true },
-            {
-              name: "Episode Date",
-              value: `\`${new Date(anime.airDate)}\``,
-              inline: true,
-            },
-          
-          );
+      const remindEmbed = new discord.MessageEmbed()
+        .setColor('#F4D03F')
+        .setAuthor('Anime added to Reminders ⏰')
+        .setTitle(anime.title)
+        .setThumbnail(anime.image)
+        .addFields(
+          {
+            name: 'Episode Number',
+            value: `\`${anime.episodeNumber}\``,
+            inline: true,
+          },
+          {
+            name: 'Episode Date',
+            value: `\`${new Date(anime.airDate)}\``,
+            inline: true,
+          }
+        );
 
-        message.channel.send(remindEmbed);
-      
+      message.channel.send(remindEmbed);
     });
 };
 

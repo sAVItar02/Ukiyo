@@ -10,7 +10,7 @@ const remindSchema = new mongoose.Schema({
     trim: true,
   },
   date: {
-    type: String,
+    type: Date,
     trim: true,
   },
 });

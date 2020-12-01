@@ -1,12 +1,14 @@
-const Data = require("./models/reminderModel");
-const discord = require("discord.js");
-const cron = require("node-cron");
-const bot = new discord.Client();
+const Data = require('./models/reminderModel');
+const cron = require('node-cron');
 
-cron.schedule("* * * * * *", async () => {
-  Data.find({ uid: 348472946110496779 }, async (err, data) => {
-    console.log(data);
-    console.log("1");
-    console.log(Date.now());
-  });
+module.exports.scheduler = cron.schedule('* * * * * *', () => {
+  const date = new Date(Date.now()).toISOString().split('T')[0];
+  Data.find({ date }, async (err, data) => {
+    data.forEach(async(e) => {
+      let user = await bot.users.fetch(e.uid).catch(e => { console.log(e) });
+      // user.send('hi');
+      console.log(e.uid);
+    });
+  }
+  );
 });
