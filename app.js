@@ -10,7 +10,7 @@ const bot = new Discord.Client();
 bot.commands = new Discord.Collection();
 bot.aliases = new Discord.Collection();
 
-dotenv.config({ path: "./config.env" });
+dotenv.config({ path: "./.env" });
 
 //DB CONNECTION
 const DB = process.env.DATABASE_URL.replace("<PASSWORD>", process.env.PASSWORD);
@@ -35,7 +35,7 @@ fs.readdir("./commands/", (err, files) => {
   }
 
   jsfile.forEach((file) => {
-    let props = require(`./commands/${file}`);
+    let props = require(`commands/${file}`);
     console.log(`${file} loaded!`);
     bot.commands.set(props.help.name, props);
 
