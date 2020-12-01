@@ -1,4 +1,4 @@
-const query = require(`${__dirname}/../graphql/genreQuery`);
+const query = require("./../graphql/genreQuery");
 const fetch = require("node-fetch");
 const discord = require("discord.js");
 
