@@ -24,7 +24,7 @@ mongoose
   .then(() => console.log("DB connection successful!"));
 
 //READ COMMAND FILES
-fs.readdir("./commands/", (err, files) => {
+fs.readdir(`${__dirname}/commands/`, (err, files) => {
   if (err) console.error;
 
   let jsfile = files.filter((f) => f.split(".").pop() === "js");
@@ -34,7 +34,7 @@ fs.readdir("./commands/", (err, files) => {
   }
 
   jsfile.forEach((file) => {
-    let props = require(`./commands/${file}`);
+    let props = require(`${__dirname}/commands/${file}`);
     console.log(`${file} loaded!`);
     bot.commands.set(props.help.name, props);
 
