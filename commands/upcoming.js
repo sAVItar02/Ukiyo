@@ -67,7 +67,6 @@ module.exports.run = async (bot, message, args) => {
           .addField(`${i + 1}. ${animeData[i++].title.romaji}`, `${date}`);
       }
       pages.push(embed);
-      console.log(pages);
 
       const emojiList = ['⏮', '⏭'];
       const timeOut = 200000;
