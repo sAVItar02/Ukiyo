@@ -175,7 +175,7 @@ module.exports.run = async (bot, message, args) => {
     const embed = new discord.MessageEmbed()
       .setColor('#FFFE00')
       .setTitle('🤓Weebs looking for something new!')
-      .setDescription('To find an anime of a genre: `uki <alias>`')
+      .setDescription('To find a random anime: `uki <alias>`')
       .addFields({
         name: '🎋Get a random anime',
         value: 'Aliases: `random`',
