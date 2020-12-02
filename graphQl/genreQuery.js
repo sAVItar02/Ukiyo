@@ -7,7 +7,7 @@ let query = `query ($search: String, $page: Int, $perPage: Int, $genre:String) {
         hasNextPage
         perPage
       }
-      media (search: $search, type: ANIME, genre: $genre) {
+      media (search: $search, type: ANIME, genre: $genre, sort: POPULARITY_DESC) {
         id
         title {
           romaji
