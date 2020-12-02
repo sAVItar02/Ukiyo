@@ -78,7 +78,9 @@ bot.on("message", async (message) => {
     command = bot.commands.get(bot.aliases.get(cmd));
   }
   try {
+    message.channel.startTyping();
     command.run(bot, message, args);
+    message.channel.stopTyping();
   } catch (e) {
     return;
   }
