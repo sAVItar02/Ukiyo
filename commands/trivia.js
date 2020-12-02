@@ -24,7 +24,6 @@ module.exports.run = async (bot, message, args) => {
     "Pikachu was named from Pika is the japanese word for electricity cracking⚡ and chu is the sound of a mouse",
     "It took Hinata 386 episodes to confess her feelings for Naruto",
     "Anime is, in fact, an abbreviated pronunciation of Animation in Japan. It began in 1917 by Japanese artists : Shimokawa Oten, Jun'ichi Kouchi and Seitaro Kitayama.",
-    "In Japanese, manga means 'Whimsical Pictures'",
     "The first anime,in 1917, was a two minutes clip of samurai testing his new sword",
     "The Titans in 'Attack On Titan' Are Based On Drunks",
   ];
