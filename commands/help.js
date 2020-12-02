@@ -194,7 +194,7 @@ module.exports.run = async (bot, message, args) => {
       });
     message.channel.send(embed);
   }
-  else if (args[0] === 'support') {
+  else if (args[0] === 'develop') {
     const embed = new discord.MessageEmbed()
       .setColor('#FFFE00')
       .setTitle(
