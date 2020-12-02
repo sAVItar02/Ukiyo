@@ -69,6 +69,7 @@ module.exports.run = async (bot, message, args) => {
               message.channel.send(
                 "That anime already exists in the users watching list, why dont you try adding another! 😕"
               );
+              message.channel.stopTyping();
               return;
             }
           }
@@ -100,6 +101,7 @@ module.exports.run = async (bot, message, args) => {
             );
 
           message.channel.send(animeEmbed);
+          message.channel.stopTyping();
         }
       });
     });

@@ -11,6 +11,7 @@ module.exports.run = async (bot, message, args) => {
 
   if (message.mentions.users.first()) {
     message.channel.send("Baka! Don't fiddle with other user's anime list! 👿");
+    message.channel.stopTyping();
     return;
   }
 
@@ -67,6 +68,7 @@ module.exports.run = async (bot, message, args) => {
             message.channel.send(
               `\`\`\`css\n[${anime.title} was removed]\`\`\``
             );
+            message.channel.stopTyping();
           } else {
             message.channel.send(
               "Looks like you tried removing something that doesn't exist! BAKA!"

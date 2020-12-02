@@ -9,6 +9,7 @@ module.exports.run = async (bot, message, args) => {
     message.channel.send(
       "If I were you, I'd recommend that to a user by tagging them 🍜"
     );
+    message.channel.stopTyping();
     return;
   }
 
@@ -80,6 +81,7 @@ module.exports.run = async (bot, message, args) => {
               message.channel.send(
                 "That anime already exists in the users recommended list, why dont you try suggesting another! 🍙"
               );
+              message.channel.stopTyping();
               return;
             }
           }
@@ -110,6 +112,7 @@ module.exports.run = async (bot, message, args) => {
               }
             );
           message.channel.send(recommendEmbed);
+          message.channel.stopTyping();
         }
       });
     });

@@ -35,6 +35,7 @@ module.exports.run = async (bot, message, args) => {
 
       if (!animeData) {
         message.channel.send("Try some other genre!");
+        message.channel.stopTyping();
         return;
       }
 

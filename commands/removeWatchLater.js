@@ -10,6 +10,7 @@ module.exports.run = async (bot, message, args) => {
 
   if (message.mentions.users.first()) {
     message.channel.send("Baka! Don't fiddle with other users anime list! 👿");
+    message.channel.stopTyping();
     return;
   }
 

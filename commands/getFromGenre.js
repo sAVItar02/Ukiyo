@@ -8,6 +8,7 @@ module.exports.run = async (bot, message, args) => {
     message.channel.send(
       "You want to search with genre and not mention it? Weird🙃"
     );
+    message.channel.stopTyping();
     return;
   }
 
@@ -129,6 +130,7 @@ module.exports.run = async (bot, message, args) => {
           );
 
         message.channel.send(animeEmbed);
+        message.channel.stopTyping();
       });
   }
 };

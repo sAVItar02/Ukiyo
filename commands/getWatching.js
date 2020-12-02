@@ -17,6 +17,7 @@ module.exports.run = async (bot, message, args) => {
       message.channel.send(
         "User hasn't added anything yet. Maybe you can help change that 💭"
       );
+      message.channel.stopTyping();
       return;
     } else {
       const watchingNow = data.watchList;

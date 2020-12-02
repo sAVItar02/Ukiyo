@@ -35,6 +35,7 @@ module.exports.run = async (bot, message, args) => {
         message.channel.send(
           "No airing date available for this anime! 😓 `The anime should be ongoing!` "
         );
+        message.channel.stopTyping();
         return;
       }
 
