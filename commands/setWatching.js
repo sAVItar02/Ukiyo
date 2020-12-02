@@ -47,7 +47,6 @@ module.exports.run = async (bot, message, args) => {
         if (!data) {
           const newData = new Data({
             uid: user.id,
-            name: bot.users.cache.get(user.id).username,
             watchList: [
               {
                 slug: slugify(anime.title, { lower: true }),
