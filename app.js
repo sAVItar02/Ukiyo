@@ -58,9 +58,9 @@ bot.on("message", async (message) => {
   if (message.channel.type === "dm") return;
   if (message.author.bot) return;
 
-  const prefix = `${process.env.PREFIX || process.env.PREFIX.toUpperCase()} `;
+  const prefix = `${process.env.PREFIX}`;
 
-  if (!message.content.startsWith(prefix)) return;
+  if (!message.content.toLowerCase().startsWith(prefix)) return;
 
   let args = message.content.slice(prefix.length).trim().split(/ +/g);
   let cmd = args.shift().toLowerCase();
