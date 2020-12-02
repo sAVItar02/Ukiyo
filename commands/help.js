@@ -46,7 +46,7 @@ module.exports.run = async (bot, message, args) => {
       .setColor('#FFFE00')
       .setTitle('👓Recommend commands!')
       .setDescription(
-        "For recommending a user: `uki <alias> <anime> <@user>` \n\n For viewing a user's list: `uki <alias> <@user>(optional)`"
+        "For recommending a user: `uki <alias> <@user> <anime>` \n\n For viewing a user's list: `uki <alias> <@user>(optional)`"
       )
       .addFields(
         {
