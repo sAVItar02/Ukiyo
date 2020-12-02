@@ -17,7 +17,7 @@ module.exports.run = async (bot, message, args) => {
     "The first Pokémon ever designed were Rhydon, Clefairy, and Lapras.",
     "Hajime Isayama created Attack On Titan with the ending already decided under the assumption that his editor wouldn't let the series be published.",
     "Death Note inspired chinese students to write down their teacher's names",
-    "People who are generally lonely like to read trivia,",
+    "People who are generally lonely like to read trivia",
     "If you thought one piece is long, the longest-running anime has over 7500 episodes.",
     "Everyone in Code Geass loves pizza because pizza hut was its primary sponsor🍕",
     "Average anime animators earn below minimum wage 😥",
