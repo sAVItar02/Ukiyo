@@ -24,6 +24,7 @@ module.exports.run = async (bot, message, args) => {
     }),
   };
 
+  message.channel.startTyping();
   fetch(url, options)
     .then((response) => response.json())
     .then((result) => {
@@ -76,6 +77,7 @@ module.exports.run = async (bot, message, args) => {
         );
 
       message.channel.send(animeEmbed);
+      message.channel.stopTyping();
     });
 };
 

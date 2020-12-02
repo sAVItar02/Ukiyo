@@ -1,7 +1,7 @@
-const Data = require('../models/userModel');
-const query = require('../graphql');
-const slugify = require('slugify');
-const fetch = require('node-fetch');
+const Data = require("../models/userModel");
+const query = require("../graphql");
+const slugify = require("slugify");
+const fetch = require("node-fetch");
 
 module.exports.run = async (bot, message, args) => {
   let user = message.author;
@@ -14,7 +14,7 @@ module.exports.run = async (bot, message, args) => {
     return;
   }
 
-  args = args.join(' ');
+  args = args.join(" ");
 
   let variables = {
     search: args,
@@ -23,10 +23,10 @@ module.exports.run = async (bot, message, args) => {
   };
 
   let options = {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
+      "Content-Type": "application/json",
+      Accept: "application/json",
     },
     body: JSON.stringify({
       query: query,
@@ -34,6 +34,7 @@ module.exports.run = async (bot, message, args) => {
     }),
   };
 
+  message.channel.startTyping();
   fetch(url, options)
     .then((response) => response.json())
     .then((result) => {
@@ -62,20 +63,22 @@ module.exports.run = async (bot, message, args) => {
             }
           });
 
-          if (check)
+          if (check) {
             message.channel.send(
               `\`\`\`css\n[${anime.title} was removed]\`\`\``
             );
-          else
+          } else {
             message.channel.send(
               "Looks like you tried removing something that doesn't exist! BAKA!"
             );
+            message.channel.stopTyping();
+          }
         }
       );
     });
 };
 
 module.exports.help = {
-  name: 'removeWatching',
-  aliases: ['rw', 'remw', 'rmw'],
+  name: "removeWatching",
+  aliases: ["rw", "remw", "rmw"],
 };

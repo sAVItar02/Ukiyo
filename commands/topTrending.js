@@ -26,6 +26,7 @@ module.exports.run = async (bot, message, args) => {
     }),
   };
 
+  message.channel.startTyping();
   fetch(url, options)
     .then((response) => response.json())
     .then((result) => {
@@ -50,6 +51,7 @@ module.exports.run = async (bot, message, args) => {
       const emojiList = ["⏮", "⏭"];
       const timeOut = 200000;
       pagination(message, pages, emojiList, timeOut);
+      message.channel.stopTyping();
     });
 };
 

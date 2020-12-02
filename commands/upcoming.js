@@ -1,21 +1,21 @@
-const query = require('./../graphQl/upcomingQuery');
-const fetch = require('node-fetch');
-const discord = require('discord.js');
-const pagination = require('discord.js-pagination');
+const query = require("./../graphQl/upcomingQuery");
+const fetch = require("node-fetch");
+const discord = require("discord.js");
+const pagination = require("discord.js-pagination");
 
 const months = [
-  'Jan',
-  'Feb',
-  'Mar',
-  'Apr',
-  'May',
-  'Jun',
-  'Jul',
-  'Aug',
-  'Sept',
-  'Oct',
-  'Nov',
-  'Dec',
+  "Jan",
+  "Feb",
+  "Mar",
+  "Apr",
+  "May",
+  "Jun",
+  "Jul",
+  "Aug",
+  "Sept",
+  "Oct",
+  "Nov",
+  "Dec",
 ];
 
 module.exports.run = async (bot, message, args) => {
@@ -30,10 +30,10 @@ module.exports.run = async (bot, message, args) => {
   };
 
   let options = {
-    method: 'POST',
+    method: "POST",
     headers: {
-      'Content-Type': 'application/json',
-      Accept: 'application/json',
+      "Content-Type": "application/json",
+      Accept: "application/json",
     },
     body: JSON.stringify({
       query: query,
@@ -41,6 +41,7 @@ module.exports.run = async (bot, message, args) => {
     }),
   };
 
+  message.channel.startTyping();
   fetch(url, options)
     .then((response) => response.json())
     .then((result) => {
@@ -63,18 +64,19 @@ module.exports.run = async (bot, message, args) => {
           embed = new discord.MessageEmbed();
         }
         embed
-          .setColor('#C92A82')
+          .setColor("#C92A82")
           .addField(`${i + 1}. ${animeData[i++].title.romaji}`, `${date}`);
       }
       pages.push(embed);
 
-      const emojiList = ['⏮', '⏭'];
+      const emojiList = ["⏮", "⏭"];
       const timeOut = 200000;
       pagination(message, pages, emojiList, timeOut);
+      message.channel.stopTyping();
     });
 };
 
 module.exports.help = {
-  name: 'upcoming',
-  aliases: ['releasing', 'soon', 'new'],
+  name: "upcoming",
+  aliases: ["releasing", "soon", "new"],
 };

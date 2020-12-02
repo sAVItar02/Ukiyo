@@ -48,15 +48,18 @@ module.exports.run = async (bot, message, args) => {
 
   let maxPages = 1;
 
+  message.channel.startTyping();
   fetch(url, pageOptions)
     .then((response) => response.json())
     .then((result) => {
       maxPages = result.data.Page.pageInfo.lastPage - 1;
       if (result.data.Page.pageInfo.total == 0) {
         message.channel.send("Try another genre! 😐");
+        message.channel.stopTyping();
         return;
       }
       GetRandomGenre();
+      message.channel.stopTyping();
     });
 
   function GetRandomGenre() {

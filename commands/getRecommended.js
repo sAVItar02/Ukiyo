@@ -1,16 +1,17 @@
-const Data = require('../models/userModel');
-const discord = require('discord.js');
-const pagination = require('discord.js-pagination');
+const Data = require("../models/userModel");
+const discord = require("discord.js");
+const pagination = require("discord.js-pagination");
 
 module.exports.run = async (bot, message, args) => {
   let user;
   let pages = [];
-  if (args[0] && args[0].startsWith('<@')) {
+  if (args[0] && args[0].startsWith("<@")) {
     user = message.mentions.users.first();
   } else {
     user = message.author;
   }
 
+  message.channel.startTyping();
   Data.findOne({ uid: user.id }, async (err, data) => {
     if (!data) {
       message.channel.send(
@@ -21,7 +22,7 @@ module.exports.run = async (bot, message, args) => {
       const recmd = data.recommended;
       let embed = new discord.MessageEmbed();
       for (i = 0; i < recmd.length; i++) {
-        let genre = '';
+        let genre = "";
         recmd[i].genres.forEach((element) => {
           genre += `\`${element}\` `;
         });
@@ -30,7 +31,7 @@ module.exports.run = async (bot, message, args) => {
           embed = new discord.MessageEmbed();
         }
         embed
-          .setColor('#9966cc')
+          .setColor("#9966cc")
           .addField(
             `${i + 1}. ${recmd[i].anime}`,
             `<@${recmd[i].recommendedBy}>\n${genre}`
@@ -38,13 +39,14 @@ module.exports.run = async (bot, message, args) => {
       }
       pages.push(embed);
     }
-    const emojiList = ['⏮', '⏭'];
+    const emojiList = ["⏮", "⏭"];
     const timeOut = 200000;
     pagination(message, pages, emojiList, timeOut);
+    message.channel.stopTyping();
   });
 };
 
 module.exports.help = {
-  name: 'viewRecommendationList',
-  aliases: ['vrl', 'view-rl', 'vreclist', 'vrecl'],
+  name: "viewRecommendationList",
+  aliases: ["vrl", "view-rl", "vreclist", "vrecl"],
 };

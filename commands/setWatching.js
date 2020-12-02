@@ -28,6 +28,7 @@ module.exports.run = async (bot, message, args) => {
     }),
   };
 
+  message.channel.startTyping();
   fetch(url, options)
     .then((response) => response.json())
     .then((result) => {
@@ -60,6 +61,7 @@ module.exports.run = async (bot, message, args) => {
 
           await newData.save().catch((e) => console.log(e));
           SendEmbed();
+          message.channel.stopTyping();
         } else {
           for (i = 0; i < data.watchList.length; i++) {
             if (
@@ -79,6 +81,7 @@ module.exports.run = async (bot, message, args) => {
           });
           await data.save().catch((e) => console.log(e));
           SendEmbed();
+          message.channel.stopTyping();
         }
 
         function SendEmbed() {

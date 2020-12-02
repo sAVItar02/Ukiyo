@@ -12,6 +12,7 @@ module.exports.run = async (bot, message, args) => {
   }
 
   Data.findOne({ uid: user.id }, async (err, data) => {
+    message.channel.startTyping();
     if (!data) {
       message.channel.send(
         "User hasn't added anything yet. Maybe you can help change that 💭"
@@ -38,6 +39,7 @@ module.exports.run = async (bot, message, args) => {
     const emojiList = ["⏮", "⏭"];
     const timeOut = 200000;
     pagination(message, pages, emojiList, timeOut);
+    message.channel.stopTyping();
   });
 };
 

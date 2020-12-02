@@ -1,17 +1,18 @@
-const Data = require('../models/userModel');
-const discord = require('discord.js');
-const pagination = require('discord.js-pagination');
+const Data = require("../models/userModel");
+const discord = require("discord.js");
+const pagination = require("discord.js-pagination");
 
 module.exports.run = async (bot, message, args) => {
   let user;
   let pages = [];
-  if (args[0] && args[0].startsWith('<@')) {
+  if (args[0] && args[0].startsWith("<@")) {
     user = message.mentions.users.first();
   } else {
     user = message.author;
   }
 
   Data.findOne({ uid: user.id }, async (err, data) => {
+    message.channel.startTyping();
     if (!data) {
       message.channel.send(
         "User hasn't added anything yet. Maybe you can help change that 💭"
@@ -21,7 +22,7 @@ module.exports.run = async (bot, message, args) => {
       const watchingNow = data.watchList;
       let embed = new discord.MessageEmbed();
       for (i = 0; i < watchingNow.length; ) {
-        let genre = '';
+        let genre = "";
         watchingNow[i].genres.forEach((element) => {
           genre += `\`${element}\` `;
         });
@@ -30,18 +31,19 @@ module.exports.run = async (bot, message, args) => {
           embed = new discord.MessageEmbed();
         }
         embed
-          .setColor('#FFD700')
+          .setColor("#FFD700")
           .addField(`${i + 1}. ${watchingNow[i++].anime}`, `${genre}`);
       }
       pages.push(embed);
     }
-    const emojiList = ['⏮', '⏭'];
+    const emojiList = ["⏮", "⏭"];
     const timeOut = 200000;
     pagination(message, pages, emojiList, timeOut);
+    message.channel.stopTyping();
   });
 };
 
 module.exports.help = {
-  name: 'viewWatching',
-  aliases: ['vcurrent', 'view-watchingNow', 'vnow', 'vwatchnow'],
+  name: "viewWatching",
+  aliases: ["vcurrent", "view-watchingNow", "vnow", "vwatchnow"],
 };
