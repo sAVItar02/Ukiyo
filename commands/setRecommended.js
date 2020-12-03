@@ -64,7 +64,7 @@ module.exports.run = async (bot, message, args) => {
             recommended: [
               {
                 slug: slugify(anime.title, { lower: true }),
-                recommendedBy: taggedID,
+                recommendedBy: user.id,
                 anime: anime.title,
                 genres: anime.genre,
               },
