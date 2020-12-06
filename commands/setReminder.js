@@ -4,7 +4,9 @@ const query = require("./../graphQl/reminderQuery");
 const discord = require("discord.js");
 
 module.exports.run = async (bot, message, args) => {
-  if(!args) return;
+  if(!args.length) {
+    return;
+  }
   const user = message.author;
   const url = `https://graphql.anilist.co`;
   args = args.join(" ");
@@ -31,6 +33,11 @@ module.exports.run = async (bot, message, args) => {
     .then((response) => response.json())
     .then(async (result) => {
       const animeData = result.data.Page;
+      if(animeData.media[0]==undefined){
+        message.channel.send("Didn't find the anime, try writing it a bit more clear!");
+        message.channel.stopTyping();
+        return;
+      }
 
       if (!animeData.media[0].nextAiringEpisode) {
         message.channel.send(
