@@ -82,6 +82,7 @@ module.exports.run = async (bot, message, args) => {
       } catch (err) {
         console.log(err);
         message.channel.send("😕You sure that is the anime's name?");
+        message.channel.stopTyping();
       }
     });
 };

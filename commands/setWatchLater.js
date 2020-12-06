@@ -33,6 +33,11 @@ module.exports.run = async (bot, message, args) => {
     .then((response) => response.json())
     .then((result) => {
       const animeData = result.data.Page;
+      if(animeData.media[0]==undefined){
+        message.channel.send("Didn't find the anime, try writing it a bit more clear!");
+        message.channel.stopTyping();
+        return;
+      }
       let anime = {
         title: animeData.media[0].title.romaji,
         english: animeData.media[0].title.english,
