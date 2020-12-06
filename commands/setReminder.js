@@ -4,6 +4,7 @@ const query = require("./../graphQl/reminderQuery");
 const discord = require("discord.js");
 
 module.exports.run = async (bot, message, args) => {
+  if(!args) return;
   const user = message.author;
   const url = `https://graphql.anilist.co`;
   args = args.join(" ");
